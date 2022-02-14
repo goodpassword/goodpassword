@@ -1,1 +1,35 @@
-Under construction
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="generator.js"></script>
+</head>
+<body>
+	<div class="main">
+		<label>
+			<input type="checkbox" id="selectLc" />
+			Lower case letters
+		</label>
+		<label>
+			<input type="checkbox" id="selectUc" />
+			Upper case letters
+		</label>
+		<label>
+			<input type="checkbox" id="selectNumbers" />
+			Numbers
+		</label>
+		<label>
+			<input type="checkbox" id="selectSpecial" />
+			Special characters (!@#$%^&*()_-+=/?><)
+		</label>
+		<br>
+		<br>
+		<textarea cols="40" rows="3" id="output"></textarea>
+		<br>
+		<label>
+			<input type="number" id="length" value="10"/>
+			Length of password
+		</label>
+		<br>
+		<button onclick="output()">Generate</button>
+	</div>
+</body>
