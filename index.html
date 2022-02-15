@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=600, initial-scale=1">
 	<script type="text/javascript" src="generator.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" id="stylesrc" />
+	<script type="text/javascript">
+		function adaptCss() {
+			if(window.screen.width < 600) {
+				document.getElementById("stylesrc").href = "mstyle.css";
+			}
+			else {
+				document.getElementById("stylesrc").href = "style.css";
+			}
+		}
+		window.onload = adaptCss;
+	</script>
 </head>
 <body>
 	<div class="main">
@@ -9,14 +22,17 @@
 			<input type="checkbox" id="selectLc" />
 			Lower case letters
 		</label>
+		<br>
 		<label>
 			<input type="checkbox" id="selectUc" />
 			Upper case letters
 		</label>
+		<br>
 		<label>
 			<input type="checkbox" id="selectNumbers" />
 			Numbers
 		</label>
+		<br>
 		<label>
 			<input type="checkbox" id="selectSpecial" />
 			Special characters (!@#$%^&*()_-+=/?><)
@@ -25,11 +41,14 @@
 		<br>
 		<textarea cols="40" rows="3" id="output"></textarea>
 		<br>
-		<label>
-			<input type="number" id="length" value="10"/>
-			Length of password
-		</label>
-		<br>
-		<button onclick="output()">Generate</button>
+		<div class="center">
+			<label>
+				Length of password<br>
+				<input type="number" id="length" value="10"/><br>
+			</label>
+			<br>
+			<button onclick="output()">Generate</button>
+		</div>
 	</div>
+	<div class="bg"></div>
 </body>
