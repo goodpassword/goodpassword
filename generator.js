@@ -53,7 +53,7 @@ function output() {
 	let len = document.getElementById("length");
 
 	let length = parseInt(len.value);
-	if(isNaN(length)) {
+	if(isNaN(length) || length < 1) {
 		alert("Invalid length");
 		return;
 	}
