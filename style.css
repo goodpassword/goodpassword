@@ -3,6 +3,10 @@ body {
 	background-color: #303339;
 }
 
+input.weight {
+	width: 6ch;
+}
+
 div.main {
 	width: 350px;
 	margin-left: auto;

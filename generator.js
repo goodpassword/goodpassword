@@ -1,22 +1,56 @@
 class Range {
-	constructor(low, high, name, weight) {
-		this.low = low;
-		this.high = high;
-		this.name = name;
-		this.weight = weight;
+	get weight() {
+		let v = parseInt(this.self.value);
+		if(isNaN(v) || v < 0) {
+			return 0;
+		}
+		return Math.min(10, v);
+	}
+
+	set weight(v) {
+		this.self.value = v;
+	}
+
+	get checked() {
+		return this.weight > 0;
+	}
+
+	check() {
+		if(this.checked) {
+			this.oldWeight = this.weight;
+			this.weight = 0;
+		}
+		else {
+			this.weight = this.oldWeight;
+		}
+		this.cbox.checked = this.checked;
 	}
 
 	pick(i) {
 		i = i % (this.high - this.low + 1);
 		return this.low === 0 ? specialChars[i] : String.fromCharCode(this.low + i);
 	}
+
+	static checkListener(e) {
+		ranges.find(r => r.cbox == e.target).check();
+	}
+
+	constructor(low, high, name, weight) {
+		this.self = document.getElementById(name);
+		this.low = low;
+		this.high = high;
+		this.weight = weight;
+		this.oldWeight = weight;
+		this.cbox = Array.from(this.self.parentNode.childNodes).find(n => n.type == "checkbox");
+		this.cbox.addEventListener("click", Range.checkListener);
+	}
 }
 
 const ranges = [
-	new Range(0, 17, "selectSpecial", 1),
-	new Range('a'.charCodeAt(0), 'z'.charCodeAt(0), "selectLc", 5),
-	new Range('A'.charCodeAt(0), 'Z'.charCodeAt(0), "selectUc", 5),
-	new Range(0x30, 0x39, "selectNumbers", 3)
+	new Range(0, 17, "weightSpecial", 1),
+	new Range('a'.charCodeAt(0), 'z'.charCodeAt(0), "weightLc", 5),
+	new Range('A'.charCodeAt(0), 'Z'.charCodeAt(0), "weightUc", 5),
+	new Range(0x30, 0x39, "weightNumbers", 3)
 ]
 
 var selected;
@@ -28,16 +62,18 @@ function charOf(i, j) {
 	j = j % totalWeight;
 	let r = 0;
 
-	while(selected[r].weight <= j) {
-		j -= selected[r].weight;
+	let w = selected[r].weight;
+	while(w <= j) {
+		j -= w;
 		r++;
+		w = selected[r].weight;
 	}
 
 	return selected[r].pick(i);
 }
 
 function generate(len) {
-	selected = ranges.filter(x => document.getElementById(x.name).checked);
+	selected = ranges.filter(x => x.checked);
 	if(selected.length === 0) {
 		return "";
 	}

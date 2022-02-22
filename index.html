@@ -3,7 +3,6 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=600, initial-scale=1">
 	<title>goodpassword.github.io</title>
-	<script type="text/javascript" src="generator.js"></script>
 	<link rel="stylesheet" type="text/css" href="" id="stylesrc" />
 	<script type="text/javascript">
 		function adaptCss() {
@@ -19,24 +18,29 @@
 </head>
 <body>
 	<div class="main">
+		<b>Occurence weightings (0-10):</b><br>
 		<label>
-			<input type="checkbox" id="selectLc" />
+			<input type="checkbox" checked />
+			<input type="number" class="weight" min="0" max="10" id="weightLc" />
 			Lower case letters
 		</label>
 		<br>
 		<label>
-			<input type="checkbox" id="selectUc" />
+			<input type="checkbox" checked />
+			<input type="number" class="weight" min="0" max="10" id="weightUc" />
 			Upper case letters
 		</label>
 		<br>
 		<label>
-			<input type="checkbox" id="selectNumbers" />
+			<input type="checkbox" checked />
+			<input type="number" class="weight" min="0" max="10" id="weightNumbers" />
 			Numbers
 		</label>
 		<br>
 		<label>
-			<input type="checkbox" id="selectSpecial" />
-			Special characters (!@#$%^&*()_-+=/?><)
+			<input type="checkbox" checked />
+			<input type="number" class="weight" min="0" max="10" id="weightSpecial" />
+			Special (!@#$%^&*()_-+=/?><)
 		</label>
 		<br>
 		<br>
@@ -52,4 +56,5 @@
 		</div>
 	</div>
 	<div class="bg"></div>
+	<script type="text/javascript" src="generator.js"></script>
 </body>
