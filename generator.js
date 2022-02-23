@@ -32,7 +32,7 @@ class Range {
 	}
 
 	static checkListener(e) {
-		ranges.find(r => r.cbox == e.target).check();
+		ranges.find(r => r.cbox === e.target).check();
 	}
 
 	constructor(low, high, name, weight) {
@@ -41,7 +41,7 @@ class Range {
 		this.high = high;
 		this.weight = weight;
 		this.oldWeight = weight;
-		this.cbox = Array.from(this.self.parentNode.childNodes).find(n => n.type == "checkbox");
+		this.cbox = Array.from(this.self.parentNode.childNodes).find(n => n.type === "checkbox");
 		this.cbox.addEventListener("click", Range.checkListener);
 	}
 }
