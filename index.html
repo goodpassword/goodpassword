@@ -3,17 +3,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=600, initial-scale=1">
 	<title>goodpassword.github.io</title>
-	<link rel="stylesheet" type="text/css" href="" id="stylesrc" />
+	<link rel="stylesheet" type="text/css" href="style.css" id="stylesrc" />
 	<script type="text/javascript">
 		function adaptCss() {
 			if(window.screen.width < 600) {
 				document.getElementById("stylesrc").href = "mstyle.css";
 			}
-			else {
-				document.getElementById("stylesrc").href = "style.css";
-			}
 		}
-		window.onload = adaptCss;
+		window.onloadedmetadata = adaptCss;
 	</script>
 </head>
 <body>

@@ -26,39 +26,27 @@ class Range {
 		this.cbox.checked = this.checked;
 	}
 
-	pick(i) {
-		i = i % (this.high - this.low + 1);
-		return this.low === 0 ? specialChars[i] : String.fromCharCode(this.low + i);
-	}
-
-	static checkListener(e) {
-		ranges.find(r => r.cbox === e.target).check();
-	}
-
-	constructor(low, high, name, weight) {
+	constructor(name, weight, pick) {
 		this.self = document.getElementById(name);
-		this.low = low;
-		this.high = high;
 		this.weight = weight;
 		this.oldWeight = weight;
 		this.cbox = Array.from(this.self.parentNode.childNodes).find(n => n.type === "checkbox");
-		this.cbox.addEventListener("click", Range.checkListener);
+		this.checkListener = () => this.check();
+		this.cbox.addEventListener('click', this.checkListener);
+		this.pick = pick;
 	}
 }
 
 const ranges = [
-	new Range(0, 17, "weightSpecial", 1),
-	new Range('a'.charCodeAt(0), 'z'.charCodeAt(0), "weightLc", 5),
-	new Range('A'.charCodeAt(0), 'Z'.charCodeAt(0), "weightUc", 5),
-	new Range(0x30, 0x39, "weightNumbers", 3)
+	new Range("weightSpecial", 1, i => specialChars[i % specialChars.length]),
+	new Range("weightLc", 5, i => String.fromCharCode(i % 26 + 'a'.charCodeAt(0))),
+	new Range("weightUc", 5, i => String.fromCharCode(i % 26 + 'A'.charCodeAt(0))),
+	new Range("weightNumbers", 3, i => `${i % 10}`)
 ]
-
-var selected;
-var totalWeight = 0;
 
 const specialChars = "!@#$%^&*()_-+=/?><";
 
-function charOf(i, j) {
+function charOf(i, j, selected, totalWeight) {
 	j = j % totalWeight;
 	let r = 0;
 
@@ -73,15 +61,15 @@ function charOf(i, j) {
 }
 
 function generate(len) {
-	selected = ranges.filter(x => x.checked);
+	let selected = ranges.filter(x => x.checked);
 	if(selected.length === 0) {
 		return "";
 	}
-	totalWeight = selected.reduce((p, c) => p + c.weight, 0);
+	let totalWeight = selected.reduce((p, c) => p + c.weight, 0);
 
 	let binary = new Uint16Array(len);
 	crypto.getRandomValues(binary);
-	return Array.from(binary).map(x => charOf(x >> 8, x % 256)).join('');
+	return Array.from(binary).map(x => charOf(x >> 8, x % 256, selected, totalWeight)).join('');
 }
 
 function output() {
